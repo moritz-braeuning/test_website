@@ -1,7 +1,7 @@
 name: "test_website"
-title: "&quot;initial test&quot;"
+title: "initial test"
 description: |
-  &quot;initial test&quot;
+  initial test;
 output_dir: "docs"
 navbar:
   right:
