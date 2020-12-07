@@ -1,0 +1,153 @@
+---
+title: "Prediction of US Unemployment"
+description: |
+  A new article created using the Distill format.
+author:
+  - name: Moritz Bräuning 
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+
+# Introduction
+US unemployment numbers had a massive increase since the coronavirus outbreaks in the USA in March 2020, in this short paper I will try to predict the unemployment numbers for the first three weeks in May 2020 using Google Trends data. In his 2009 paper Choi introduced the method of predicting the present with Google Trends data for several macroeconomic measures. Choi`s assumption is quite intuitive: people use Google to inform themself when planning the purchase of a good. Taking the massive increase of internet usage over the last 11 years into account one can assume that the performance of Google Trends for prediction and nowcasting economic development has increased as well. 
+
+To analyze the development the unemployment claims data provided by the US Department of Labour is set as the dependent variable. Note that the data selected is not seasonally adjusted.  
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(vtreat)
+library(modelr)
+library(sjPlot)
+setwd("/Users/moritz.braeuning/Library/Mobile Documents/com~apple~CloudDocs/Uni/2. Semester/Computational Econ/R Code")
+
+us <- read_csv("us_unemploy.csv")
+us <- us %>% select(weekEnded, `InitialClaims/NSA`)
+us$weekEnded <- as.Date(us$weekEnded, format = "%m/%d/%Y")
+us$weekEnded <- us$weekEnded+1
+us <- us %>% filter(weekEnded>="2019-05-26"&weekEnded<"2020-05-24")
+names(us)<-c("Week", "claims")
+ggplot(us, aes(Week, claims))+
+  geom_line(color= "blue")+
+  ggtitle("US Unemployment Claims")
+```
+
+
+\ To tackle the spread of the new Cornovirus, which was first detected in December 2019 in Wuhan, China several countries entered a lock- or shutdown of their public and economic life in March 2020. The first US state to introduce lockdown measures was California on March 19th, other states following over the next couple of days. 
+Looking at the plot for the US unemployment claims one can observe a dramatic increase from the end of march on. One problem with the data from the US Department of Labor is that the data is delayed: this has two major reasons: 1. the combined data is published at the end of the month and 2. not all the claims could be processed since all of the unemployment offices were overwhelmed by the sheer number of claims.  
+
+# Google Trends
+
+An indicator using Google Trends can be more accurate in predicting the now, since this data is available real time. The options for choosing the data range from the last four hours up to the start of Google Trends in 2004. For the purpose of this paper a timerange of 12 Months was selected. In terms of kewywords the predictive model uses "unemployment", "unemployment benefits" and "layoff", other keywords like "indeed", "linkedin" or "jobs" associated with the act of job search have also been added to the model, but have been removed due to low signifcance levels. 
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+google <- read.csv("/Users/moritz.braeuning/Library/Mobile Documents/com~apple~CloudDocs/Uni/2. Semester/Computational Econ/R Code/gtrends_unemployment_benefits.csv",header = F, sep = ",")
+names(google) <- google[2,1:2]
+google <- google[-c(1,2),]
+google$Week <- as.Date(google$Week)
+google$`Unemployment benefits: (United States)` <- as.numeric(google$`Unemployment benefits: (United States)`)
+
+
+google2 <- read.csv("/Users/moritz.braeuning/Library/Mobile Documents/com~apple~CloudDocs/Uni/2. Semester/Computational Econ/R Code/gtrends_layoff.csv",header = F, sep = ",")
+names(google2) <- google2[2,1:2]
+google2 <- google2[-c(1,2),]
+google2$Week <- as.Date(google2$Week)
+google2$`Layoff: (United States)` <- as.numeric(google2$`Layoff: (United States)`)
+
+
+
+google3 <- read.csv("/Users/moritz.braeuning/Library/Mobile Documents/com~apple~CloudDocs/Uni/2. Semester/Computational Econ/R Code/gtrends_unemployment.csv",header = F, sep = ",")
+names(google3) <- google3[2,1:2]
+google3 <- google3[-c(1,2),]
+google3$Week <- as.Date(google3$Week)
+google3$`Unemployment: (United States)` <- as.numeric(google3$`Unemployment: (United States)` )
+
+
+pred_dat <- inner_join(google, us, by= "Week")
+pred_dat <- inner_join(pred_dat, google2 , by= "Week")
+pred_dat <- inner_join(pred_dat, google3 , by= "Week")
+pred_dat1 <- pred_dat %>% filter(Week<"2020-05-03")
+pred_dat2 <- pred_dat %>% filter(Week>="2020-05-03")
+
+
+us_scaled <- us
+us_scaled$claims <- scale(us$claims)
+
+col <- c("Layoff"="red", "Unemployment"="green", "Unemployment Benefits"="blue", "Unemployment Claims"="black")
+
+ggplot(google, aes(Week, scale(`Unemployment benefits: (United States)`), color= "Unemployment Benefits"))+
+  geom_line()+
+  geom_line(google2,mapping=aes(x=Week, y=scale(`Layoff: (United States)`), color="Layoff"))+
+  geom_line(google3,mapping=aes(x=Week, y=scale(`Unemployment: (United States)`), color= "Unemployment"))+
+  geom_line(us_scaled, mapping=aes(Week, claims, color="Unemployment Claims"))+
+  labs(x = "Date",
+       y = "Scaled",
+       color = "Legend") +
+    scale_color_manual(values = col)+
+  ggtitle("Usage of Keywords in the US vs unemployment claims")
+```
+
+
+Looking at the plot from the normalized google trends vs scaled unemployment data one can observe an increase in the queries before the unemployment claims increase, this supports the hypothesis that Google Trends allows better nowcasting than the US Labor Department. 
+
+# Predicting the number of unemployment claims with Google Trends
+
+To validate whether the Google Trends data can be used for the prediction of the US unemployment claims a linear regression model with the keywords used as $\beta$ is calculated. The standard formula for the linear regression model is used: 
+
+$y_{i}=\beta_{0}+\beta_{1}*x_{Unemployment Benefits}+\beta_2*x_{Unemployment}+\beta_3*x_{Layoff}+\varepsilon_i$  
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+mod2 <- lm(claims~`Unemployment benefits: (United States)`
+           +`Layoff: (United States)`+
+             `Unemployment: (United States)`,data = pred_dat1)
+tab_model(mod2)
+```
+
+
+The predicted model shows high levels of significance for the indicators chosen and a $R^2$ of 0.9805, indicating a fitting model. To validate the assumpptions it can help to predict the outcomes for the given data and to plot them against the actual unemployment numbers. 
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+colors <- c("Claims"="blue", "Prediction"="red")
+pred_dat1$prediction <- predict(mod2, pred_dat1)
+ggplot(pred_dat1, aes(Week, claims, color="Claims"))+
+  geom_line()+
+  geom_line(aes(y=prediction, color="Prediction"))+
+  labs(x = "Date",
+       y = "log(claims)",
+       color = "Legend") +
+  scale_color_manual(values = colors)+
+  ggtitle("Predicted and actual claims for unemployment in the US")
+```
+
+
+It can be observed that Google Trends data is not always accurate in predicting the number of actual unemployment claims. One possible explanation for this is that the indicators are not as accurate due to the dramatic increase of queries since the coronavirus outbreak, resulting in a model giving to much weight to search queries containing  "unemployment claims". In predicting the actual numbers for the time of the Coronavirus outbreak and the lockdown related increase in unemployment claims the model and the actual numbers seem to match, even though for the last week of April the model does not predict a decrease as steep as the actual claims. However, it has to be noted that the model used for prediction is very simple and might be improved by using more keywords. 
+
+# Predcting future unemplayment claims
+
+Coming back to the beginning of this data exploration one might remebers that Google Trends might be useful since the data collected by givernment agencys is lagging behind the actual trends. Therefore it would be interesting to predict the number of unemployment claims for the first weeks of May 2020 where the Google Trends are already available, and the official numbers from the US Department of Labour are still to be announced. In order to make these predctions the above plot of the Google Trends regression is extended by the first three weks of May.
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+pred_dat$prediction <- predict(mod2, pred_dat)
+ggplot(pred_dat, aes(Week, claims, color="Claims"))+
+  geom_line()+
+  geom_line(aes(y=prediction, color="Prediction"))+
+  labs(x = "Date",
+       y = "log(claims)",
+       color = "Legend") +
+  scale_color_manual(values = colors)+
+  ggtitle("Predicted and actual claims for unemployment in the US")
+pred_may <- pred_dat %>% filter(Week>="2020-05-03")
+sum_may <- round(sum(pred_may$prediction))
+```
+
+It can be assumed that the number of claims continues to be well over the claims before March but stabilizing on a high level. The model predicts a number of ~8.6 Million new claims for unemployment benefits for the first three weeks of May alone. As soon as all the numbers for May are published the model will be tested against the actual numbers. 
+
+
+
+

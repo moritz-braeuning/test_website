@@ -9,4 +9,12 @@ navbar:
       href: index.html
     - text: "About"
       href: about.html
+  left:
+    - text: "Projects"
+      menu: 
+          - text: "Subpage"
+            href: Untitled.html
+          - text: "Predictions 2020"
+            href: Prediction_US_2020.html
+search: TRUE
 output: distill::distill_article

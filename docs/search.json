@@ -14,7 +14,35 @@
       "description": "This is an test to host the user research projects in the future\n",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2020-12-07T16:09:39+01:00"
+      "last_modified": "2020-12-07T17:08:58+01:00"
+    },
+    {
+      "path": "Prediction_US_2020.html",
+      "title": "Prediction of US Unemployment",
+      "description": "A new article created using the Distill format.\n",
+      "author": [
+        {
+          "name": "Moritz Bräuning",
+          "url": {}
+        }
+      ],
+      "date": "`r Sys.Date()`",
+      "contents": "\nIntroduction\nUS unemployment numbers had a massive increase since the coronavirus outbreaks in the USA in March 2020, in this short paper I will try to predict the unemployment numbers for the first three weeks in May 2020 using Google Trends data. In his 2009 paper Choi introduced the method of predicting the present with Google Trends data for several macroeconomic measures. Choi`s assumption is quite intuitive: people use Google to inform themself when planning the purchase of a good. Taking the massive increase of internet usage over the last 11 years into account one can assume that the performance of Google Trends for prediction and nowcasting economic development has increased as well.\nTo analyze the development the unemployment claims data provided by the US Department of Labour is set as the dependent variable. Note that the data selected is not seasonally adjusted.\n\n\n\n To tackle the spread of the new Cornovirus, which was first detected in December 2019 in Wuhan, China several countries entered a lock- or shutdown of their public and economic life in March 2020. The first US state to introduce lockdown measures was California on March 19th, other states following over the next couple of days. Looking at the plot for the US unemployment claims one can observe a dramatic increase from the end of march on. One problem with the data from the US Department of Labor is that the data is delayed: this has two major reasons: 1. the combined data is published at the end of the month and 2. not all the claims could be processed since all of the unemployment offices were overwhelmed by the sheer number of claims.\nGoogle Trends\nAn indicator using Google Trends can be more accurate in predicting the now, since this data is available real time. The options for choosing the data range from the last four hours up to the start of Google Trends in 2004. For the purpose of this paper a timerange of 12 Months was selected. In terms of kewywords the predictive model uses “unemployment”, “unemployment benefits” and “layoff”, other keywords like “indeed”, “linkedin” or “jobs” associated with the act of job search have also been added to the model, but have been removed due to low signifcance levels.\n\n\n\nLooking at the plot from the normalized google trends vs scaled unemployment data one can observe an increase in the queries before the unemployment claims increase, this supports the hypothesis that Google Trends allows better nowcasting than the US Labor Department.\nPredicting the number of unemployment claims with Google Trends\nTo validate whether the Google Trends data can be used for the prediction of the US unemployment claims a linear regression model with the keywords used as \\(\\beta\\) is calculated. The standard formula for the linear regression model is used:\n\\(y_{i}=\\beta_{0}+\\beta_{1}*x_{Unemployment Benefits}+\\beta_2*x_{Unemployment}+\\beta_3*x_{Layoff}+\\varepsilon_i\\)\n\n\n \n\n\nclaims\n\n\nPredictors\n\n\nEstimates\n\n\nCI\n\n\np\n\n\n(Intercept)\n\n\n623728.39\n\n\n469654.92 – 777801.85\n\n\n<0.001\n\n\nUnemployment benefits * (United States)\n\n\n172592.46\n\n\n136596.87 – 208588.04\n\n\n<0.001\n\n\nLayoff * (United States)\n\n\n-55394.72\n\n\n-67159.78 – -43629.65\n\n\n<0.001\n\n\nUnemployment * (UnitedStates)\n\n\n-69495.53\n\n\n-97294.37 – -41696.69\n\n\n<0.001\n\n\nObservations\n\n\n49\n\n\nR2 / R2 adjusted\n\n\n0.980 / 0.979\n\n\nThe predicted model shows high levels of significance for the indicators chosen and a \\(R^2\\) of 0.9805, indicating a fitting model. To validate the assumpptions it can help to predict the outcomes for the given data and to plot them against the actual unemployment numbers.\n\n\n\nIt can be observed that Google Trends data is not always accurate in predicting the number of actual unemployment claims. One possible explanation for this is that the indicators are not as accurate due to the dramatic increase of queries since the coronavirus outbreak, resulting in a model giving to much weight to search queries containing “unemployment claims”. In predicting the actual numbers for the time of the Coronavirus outbreak and the lockdown related increase in unemployment claims the model and the actual numbers seem to match, even though for the last week of April the model does not predict a decrease as steep as the actual claims. However, it has to be noted that the model used for prediction is very simple and might be improved by using more keywords.\nPredcting future unemplayment claims\nComing back to the beginning of this data exploration one might remebers that Google Trends might be useful since the data collected by givernment agencys is lagging behind the actual trends. Therefore it would be interesting to predict the number of unemployment claims for the first weeks of May 2020 where the Google Trends are already available, and the official numbers from the US Department of Labour are still to be announced. In order to make these predctions the above plot of the Google Trends regression is extended by the first three weks of May.\n\n\n\nIt can be assumed that the number of claims continues to be well over the claims before March but stabilizing on a high level. The model predicts a number of ~8.6 Million new claims for unemployment benefits for the first three weeks of May alone. As soon as all the numbers for May are published the model will be tested against the actual numbers.\n\n\n\n",
+      "last_modified": "2020-12-07T17:02:38+01:00"
+    },
+    {
+      "path": "Untitled.html",
+      "title": "This is the first subpage of the test",
+      "description": "A new article created using the Distill format.\n",
+      "author": [
+        {
+          "name": "Moritz Bräuning",
+          "url": "https://onefootball.com"
+        }
+      ],
+      "date": "`r Sys.Date()`",
+      "contents": "\nDistill is a publication format for scientific and technical writing, native to the web.\nLearn more about using Distill for R Markdown at https://rstudio.github.io/distill.\n\n\n\n",
+      "last_modified": "2020-12-07T16:49:32+01:00"
     }
   ],
   "collections": []

@@ -86,29 +86,33 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>initial test</title>
+  <title>initial test: Prediction of US Unemployment</title>
   
-  <meta property="description" itemprop="description" content="This is an test to host the user research projects in the future"/>
+  <meta property="description" itemprop="description" content="A new article created using the Distill format."/>
   
   
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-12-07"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-12-07"/>
+  <meta name="article:author" content="Moritz Bräuning"/>
   
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="initial test"/>
+  <meta property="og:title" content="initial test: Prediction of US Unemployment"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="This is an test to host the user research projects in the future"/>
+  <meta property="og:description" content="A new article created using the Distill format."/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="initial test"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="initial test"/>
-  <meta property="twitter:description" content="This is an test to host the user research projects in the future"/>
+  <meta property="twitter:title" content="initial test: Prediction of US Unemployment"/>
+  <meta property="twitter:description" content="A new article created using the Distill format."/>
   
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","site"]}},"value":[{"type":"character","attributes":{},"value":["initial test"]},{"type":"character","attributes":{},"value":["This is an test to host the user research projects in the future\n"]},{"type":"character","attributes":{},"value":["distill::distill_website"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Prediction of US Unemployment"]},{"type":"character","attributes":{},"value":["A new article created using the Distill format.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Moritz Bräuning"]}]}]},{"type":"character","attributes":{},"value":["2020-12-07"]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2005,7 +2009,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"initial test","description":"This is an test to host the user research projects in the future","authors":[]}
+{"title":"Prediction of US Unemployment","description":"A new article created using the Distill format.","authors":[{"author":"Moritz Bräuning","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2020-12-07T00:00:00.000+00:00","citationText":"Bräuning, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2022,7 +2026,6 @@ Projects
 </button>
 <div class="nav-dropdown-content">
 <a href="Untitled.html">Subpage</a>
-<a href="Prediction_US_2020.html">Predictions 2020</a>
 </div>
 </div>
 </div>
@@ -2038,14 +2041,144 @@ Projects
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>initial test</h1>
+<h1>Prediction of US Unemployment</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>This is an test to host the user research projects in the future</p></p>
+<p><p>A new article created using the Distill format.</p></p>
 </div>
 
+<div class="d-byline">
+  Moritz Bräuning  
+  
+<br/>2020-12-07
+</div>
 
 <div class="d-article">
+<h1 id="introduction">Introduction</h1>
+<p>US unemployment numbers had a massive increase since the coronavirus outbreaks in the USA in March 2020, in this short paper I will try to predict the unemployment numbers for the first three weeks in May 2020 using Google Trends data. In his 2009 paper Choi introduced the method of predicting the present with Google Trends data for several macroeconomic measures. Choi`s assumption is quite intuitive: people use Google to inform themself when planning the purchase of a good. Taking the massive increase of internet usage over the last 11 years into account one can assume that the performance of Google Trends for prediction and nowcasting economic development has increased as well.</p>
+<p>To analyze the development the unemployment claims data provided by the US Department of Labour is set as the dependent variable. Note that the data selected is not seasonally adjusted.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="Prediction_US_2020_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
+</div>
+<p> To tackle the spread of the new Cornovirus, which was first detected in December 2019 in Wuhan, China several countries entered a lock- or shutdown of their public and economic life in March 2020. The first US state to introduce lockdown measures was California on March 19th, other states following over the next couple of days. Looking at the plot for the US unemployment claims one can observe a dramatic increase from the end of march on. One problem with the data from the US Department of Labor is that the data is delayed: this has two major reasons: 1. the combined data is published at the end of the month and 2. not all the claims could be processed since all of the unemployment offices were overwhelmed by the sheer number of claims.</p>
+<h1 id="google-trends">Google Trends</h1>
+<p>An indicator using Google Trends can be more accurate in predicting the now, since this data is available real time. The options for choosing the data range from the last four hours up to the start of Google Trends in 2004. For the purpose of this paper a timerange of 12 Months was selected. In terms of kewywords the predictive model uses “unemployment”, “unemployment benefits” and “layoff”, other keywords like “indeed”, “linkedin” or “jobs” associated with the act of job search have also been added to the model, but have been removed due to low signifcance levels.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="Prediction_US_2020_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<p>Looking at the plot from the normalized google trends vs scaled unemployment data one can observe an increase in the queries before the unemployment claims increase, this supports the hypothesis that Google Trends allows better nowcasting than the US Labor Department.</p>
+<h1 id="predicting-the-number-of-unemployment-claims-with-google-trends">Predicting the number of unemployment claims with Google Trends</h1>
+<p>To validate whether the Google Trends data can be used for the prediction of the US unemployment claims a linear regression model with the keywords used as <span class="math inline">\(\beta\)</span> is calculated. The standard formula for the linear regression model is used:</p>
+<p><span class="math inline">\(y_{i}=\beta_{0}+\beta_{1}*x_{Unemployment Benefits}+\beta_2*x_{Unemployment}+\beta_3*x_{Layoff}+\varepsilon_i\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+claims
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+p
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+623728.39
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+469654.92 – 777801.85
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Unemployment benefits * <br>(United States)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+172592.46
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+136596.87 – 208588.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Layoff * (United States)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-55394.72
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-67159.78 – -43629.65
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Unemployment * (United<br>States)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-69495.53
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-97294.37 – -41696.69
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+49
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.980 / 0.979
+</td>
+</tr>
+</table>
+</div>
+<p>The predicted model shows high levels of significance for the indicators chosen and a <span class="math inline">\(R^2\)</span> of 0.9805, indicating a fitting model. To validate the assumpptions it can help to predict the outcomes for the given data and to plot them against the actual unemployment numbers.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="Prediction_US_2020_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<p>It can be observed that Google Trends data is not always accurate in predicting the number of actual unemployment claims. One possible explanation for this is that the indicators are not as accurate due to the dramatic increase of queries since the coronavirus outbreak, resulting in a model giving to much weight to search queries containing “unemployment claims”. In predicting the actual numbers for the time of the Coronavirus outbreak and the lockdown related increase in unemployment claims the model and the actual numbers seem to match, even though for the last week of April the model does not predict a decrease as steep as the actual claims. However, it has to be noted that the model used for prediction is very simple and might be improved by using more keywords.</p>
+<h1 id="predcting-future-unemplayment-claims">Predcting future unemplayment claims</h1>
+<p>Coming back to the beginning of this data exploration one might remebers that Google Trends might be useful since the data collected by givernment agencys is lagging behind the actual trends. Therefore it would be interesting to predict the number of unemployment claims for the first weeks of May 2020 where the Google Trends are already available, and the official numbers from the US Department of Labour are still to be announced. In order to make these predctions the above plot of the Google Trends regression is extended by the first three weks of May.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="Prediction_US_2020_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<p>It can be assumed that the number of claims continues to be well over the claims before March but stabilizing on a high level. The model predicts a number of ~8.6 Million new claims for unemployment benefits for the first three weeks of May alone. As soon as all the numbers for May are published the model will be tested against the actual numbers.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -2054,6 +2187,15 @@ Projects
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->

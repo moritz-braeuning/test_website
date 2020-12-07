@@ -2,14 +2,7 @@
 title: "initial test"
 description: |
  This is an test to host the user research projects in the future
-output_dir: "docs"
-navbar:
-  right:
-    - text: "Home"
-      href: index.html
-    - text: "About"
-      href: about.html
-output: distill::distill_article
+site: distill::distill_website
 ---
 
 ```{r setup, include=FALSE}
